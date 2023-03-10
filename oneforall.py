@@ -1,4 +1,8 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
 from sklearn import datasets
+from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
@@ -49,3 +53,9 @@ for name, clf in classifiers.items():
 ranking.sort(reverse=True) # sorted by score
 for rank, data in enumerate(ranking, 1):
     print(f'[Rank {rank}] {data[0]:.3%} : {data[1]}')
+
+pca = PCA(n_components=2)
+proj = pca.fit_transform(digits.data)
+plt.scatter(proj[:, 0], proj[:, 1], c=digits.target, cmap="Paired")
+plt.colorbar()
+plt.show()
