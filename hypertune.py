@@ -14,7 +14,7 @@ from scipy.stats import uniform
 
 digits = datasets.load_digits()
 X, y = digits.data, digits.target
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 ########################################################################
 
@@ -43,8 +43,8 @@ neural_network_hyperparams = {
 ########################################################################
 
 classifiers = {
-    'Random Forest': RandomForestClassifier(),
-    'Neural Network': MLPClassifier(),
+    'Random Forest': RandomForestClassifier(random_state=42),
+    'Neural Network': MLPClassifier(max_iter=1000, random_state=42),
 }
 
 parameters = {
@@ -69,7 +69,8 @@ for name, clf in classifiers.items():
         cv = 5, 
         verbose = 2,
         n_iter = 100, 
-        n_jobs = -1,                      
+        n_jobs = -1,
+        random_state = 42,                   
     )
     random_search.fit(X_train, y_train)
 
@@ -83,4 +84,3 @@ for name, clf in classifiers.items():
 for result in results:
     print(result[0])
     print(result[1])
-    
